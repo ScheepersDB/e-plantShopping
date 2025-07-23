@@ -316,7 +316,12 @@ function ProductList({ onHomeClick }) {
                                         <div className="product-description">{ plant.description }</div>
                                     </main>
                                     <footer>
-                                        <button className={["product-button", addedToCart[plant.name] && 'added-to-cart' || ''].join(' ')} onClick={() => handleAddToCart(plant)} type="button">{ addedToCart[plant.name] && 'Added to Cart' || 'Add to Cart' }</button>
+                                        <button 
+                                            className={["product-button", addedToCart[plant.name] && 'added-to-cart' || ''].join(' ')} 
+                                            onClick={() => !addedToCart[plant.name] && handleAddToCart(plant)} 
+                                            type="button">
+                                                { addedToCart[plant.name] && 'Added to Cart' || 'Add to Cart' }
+                                        </button>
                                     </footer>
                                 </section>
                             )}
