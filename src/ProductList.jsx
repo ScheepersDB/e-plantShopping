@@ -8,11 +8,14 @@ import { addItem } from './CartSlice';
 function ProductList({ onHomeClick }) {
     const [showCart, setShowCart] = useState(false);
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
-    const [addedToCart, setAddedToCart] = useState({});
 
     const dispatch = useDispatch();
 
     const cart = useSelector(state => state.cart.items);
+    const addedToCart = (cart || []).reduce(
+        (added, currentItem) => added[currentItem.name] = true && added,
+        {}
+    );
     const calculateTotalItems = () => (cart || []).reduce(
         (total, currentItem) => total + currentItem.quantity,
         0  
@@ -268,10 +271,6 @@ function ProductList({ onHomeClick }) {
 
     const handleAddToCart = (product) => {
         dispatch(addItem(product));
-        setAddedToCart((prevState) => ({
-            ...prevState,
-            [product.name]: true
-        }));
     };    
 
     return (
@@ -303,7 +302,7 @@ function ProductList({ onHomeClick }) {
             </div>
             {!showCart ? (
                 <div>
-                    {   plantsArray.map( (category, index) => 
+                    { plantsArray.map( (category, index) => 
                     <div className="product-grid" key={index} >
                         <h1 class="plant_heading">{ category.category }</h1>
                         <div className="product-list">
